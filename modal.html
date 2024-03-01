@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      .container {
+        height: 500vh;
+      }
+      .card_all {
+        width: 85%;
+        height: 22vh;
+        border: 1px solid black;
+        margin: auto;
+        margin-top: 15px;
+      }
+      .diagonal-line {
+        position: absolute;
+        left: 200px;
+        width: 15%;
+        height: 10px;
+        background-color: #000;
+        transform: rotate(-45deg);
+        margin-top: 70px;
+      }
+      .modal-content {
+        position: relative;
+        left: 500px;
+        top: 250px;
+        width: 50%;
+        height: 50%;
+        background-color: rgba(220, 220, 220, 0.1);
+        border-radius: 10px;
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 60px #000;
+        backdrop-filter: blur(5px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="card_all col-sm-3 col-12">
+          <button id="123" onclick="modal">123</button>
+          <div class="diagonal-line"></div>
+        </div>
+        <div class="card_all col-sm-3 col-12">
+          <div class="diagonal-line"></div>
+        </div>
+        <div class="card_all col-sm-3 col-12"></div>
+        <div class="card_all col-sm-3 col-12"></div>
+      </div>
+
+      <button id="openModalBtn">打開 Modal</button>
+
+      <div id="myModal" class="modal" style="display: none">
+        <div class="modal-content" style="color: red">
+          <span class="close">X</span>
+          <div id="box">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.js"></script>
+    <!-- 引入 gsap 主程式 -->
+    <script src="./gsap/gsap.js"></script>
+
+    <script>
+      $.ajax({
+        type: "get",
+        url: "https://ghibliapi.vercel.app/films",
+        data: "data",
+        dataType: "json",
+        success: function (res) {
+          let Title = res;
+          console.log("Title", Title);
+
+          $.each(Title, function (indexInArray, value) {
+            // console.log(indexInArray, value);
+
+            let Movie = value.original_title;
+            let Time = value.release_date;
+            let Director = value.director;
+            let Producer = value.producer;
+            let Length = value.running_time;
+            let myElement = $('#myElement');
+            let XD = $('#box');
+
+            let box = `
+                  <div class="display:flex">
+                  <td class="text-center">電影名稱:${indexInArray}${Movie}</td> <br>
+                  <td class="text-center">${Time}</td> <br>
+                  <td class="text-center">${Director}</td> <br>
+                  <td class="text-center">${Producer}</td> <br>
+                  <td class="text-center">${Length}分</td> <br>
+                  </div>
+                  `;
+            console.log(box);
+           
+            XD.append(box);
+             
+          });
+        },
+      });
+
+
+      $(".diagonal-line").hide();
+
+      $("#123").click(function () {
+        $(".diagonal-line").show();
+
+        gsap.fromTo(
+          ".diagonal-line",
+          {
+            x: 100,
+            duration: 2,
+            delay: 1,
+            opacity: 1,
+          },
+          {
+            x: 1100,
+            duration: 2,
+            delay: 1,
+            opacity: 0,
+          }
+        );
+      });
+
+      let openModalBtn = document.getElementById("openModalBtn");
+      let modal = document.getElementById("myModal");
+      let closeModal = document.getElementsByClassName("close")[0];
+
+      openModalBtn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      closeModal.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // model 之外
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
