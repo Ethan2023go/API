@@ -32,33 +32,70 @@
       width: 400px;
       height: 400px;
       position: absolute;
-      z-index: 5;
+      z-index:5;
       border-radius: 15px;
       background: rgba(51, 51, 51, 0.4);
-      top: 300px;
-      left: 710px;
     }
 
     #box{
-      height: 500vh;
+      height: 380vh;
       background-color: aquamarine;
     }
 
     .button{
       width: 100px;
-      height: 100px;
+      height: 50px;
       margin-bottom: 100px;
     }
 
     .content{
       border: 1px solid black;
       display: flex;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
     }
+
+    .modal-content {
+        position: relative;
+        left: 500px;
+        top: 250px;
+        width: 50%;
+        height: 50%;
+        background-color: rgba(220, 220, 220, 0.1);
+        border-radius: 10px;
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 60px #000;
+        backdrop-filter: blur(5px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 5;
+      }
+      .modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
   </style>
 </head>
 
 <body>
+  <!-- <button id="openModalBtn">打開 Modal</button>
+  <div id="myModal" class="modal" style="display: none">
+    <div class="modal-content" style="color: red">
+      <span class="close">X</span>
+    </div>
+  </div> -->
+
+
+  <div id="cover" style="display:none; ">
+    <div id="coverr">
+      <div style="position:absolute; left:10px; top:4px; cursor:pointer; z-index:101; color:aliceblue; font-size:25px; font-family:Arial Black;"
+        onclick="cl('#cover')">X</div>
+      <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:100;"></div>
+    </div>
+  </div>
   <div id="box">
 
   </div>
@@ -71,13 +108,8 @@
     </div>
   </div>
 
-  <div id="cover" style="display:none; ">
-    <div id="coverr">
-      <a style="position:absolute; right:10px; top:4px; cursor:pointer; z-index:101; color:aliceblue; font-size:25px; font-family:Arial Black;"
-        onclick="cl('#cover')">X</a>
-      <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:100;"></div>
-    </div>
-  </div>
+
+
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -147,7 +179,6 @@
           `;
           //   串接字串
 
-
         });
         XD.html(html);
       },
@@ -194,6 +225,26 @@
     }
 
 
+
+
+      // let openModalBtn = document.getElementById("openModalBtn");
+      // let modal = document.getElementById("myModal");
+      // let closeModal = document.getElementsByClassName("close")[0];
+
+      // openModalBtn.onclick = function () {
+      //   modal.style.display = "block";
+      // };
+
+      // closeModal.onclick = function () {
+      //   modal.style.display = "none";
+      // };
+
+      // // model 之外
+      // window.onclick = function (event) {
+      //   if (event.target == modal) {
+      //     modal.style.display = "none";
+      //   }
+      // };
 
   </script>
 
