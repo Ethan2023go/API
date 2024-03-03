@@ -1,86 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-      .container {
-        height: 500vh;
-      }
-      .card_all {
-        width: 85%;
-        height: 22vh;
-        border: 1px solid black;
-        margin: auto;
-        margin-top: 15px;
-      }
-      .diagonal-line {
-        position: absolute;
-        left: 200px;
-        width: 15%;
-        height: 10px;
-        background-color: #000;
-        transform: rotate(-45deg);
-        margin-top: 70px;
-      }
-      .modal-content {
-        position: relative;
-        left: 500px;
-        top: 250px;
-        width: 50%;
-        height: 50%;
-        background-color: rgba(220, 220, 220, 0.1);
-        border-radius: 10px;
-        border: 1px solid #fff;
-        box-shadow: 0px 0px 60px #000;
-        backdrop-filter: blur(5px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .modal {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      height: 500vh;
+    }
+
+    .card_all {
+      width: 85%;
+      height: 22vh;
+      border: 1px solid black;
+      margin: auto;
+      margin-top: 15px;
+    }
+
+    .diagonal-line {
+      position: absolute;
+      left: 200px;
+      width: 15%;
+      height: 10px;
+      background-color: #000;
+      transform: rotate(-45deg);
+      margin-top: 70px;
+    }
+
+    #cover {
+      width: 400px;
+      height: 400px;
+      position: absolute;
+      z-index: 5;
+      border-radius: 15px;
+      background: rgba(51, 51, 51, 0.4);
+      top: 300px;
+      left: 710px;
+    }
+
+    #box{
+      height: 500vh;
+      background-color: aquamarine;
+    }
+
+    .button{
+      width: 100px;
+      height: 100px;
+      margin-bottom: 100px;
+    }
+
+    .content{
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
 </head>
+
 <body>
   <div id="box">
 
   </div>
-  
+
   <div class="row mt-5">
     <div class="card_all col-sm-3 col-12">
       <button id="123">line</button>
       <div class="diagonal-line"></div>
-      <button id="openModalBtn">打開 Modal</button>
+      <button class="nav-link bg-danger" onclick="data('#cover','#cvr')">點選開啟詳細資料</button>
     </div>
-
-
   </div>
 
-<div id="myModal" class="modal" style="display: none">
-  <div class="modal-content">
-    <span class="close">X</span>
+  <div id="cover" style="display:none; ">
+    <div id="coverr">
+      <a style="position:absolute; right:10px; top:4px; cursor:pointer; z-index:101; color:aliceblue; font-size:25px; font-family:Arial Black;"
+        onclick="cl('#cover')">X</a>
+      <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:100;"></div>
+    </div>
   </div>
 
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-crossorigin="anonymous"
-referrerpolicy="no-referrer"
-></script>
-    <!-- bootstrap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.js"></script>
-    <!-- 引入 gsap 主程式 -->
-    <script src="./gsap/gsap.js"></script>
 
-<script>
-  function get(id) {  
-    
-    $.ajax({
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.js"></script>
+  <!-- 引入 gsap 主程式 -->
+  <script src="./gsap/gsap.js"></script>
+
+  <script>
+    function get(id) {
+    //  console.log(id);
+      $.ajax({
         type: "get",
         url: "https://ghibliapi.vercel.app/films",
         data: "data",
@@ -88,84 +99,104 @@ referrerpolicy="no-referrer"
         success: function (res) {
           console.log(res[id])
 
-          let modal= $('#myModal');
-          let box='';
+          let modal = $('#cover');
+          let box = '';
 
-            
-            let Movie = res[id].original_title;
-            let Time = res[id].release_date;
-            let Director = res[id].director;
-            let Producer = res[id].producer;
-            let Length = res[id].running_time;
-                        
-            box += `
-                  <div class="content">
+
+          let Movie = res[id].original_title;
+          let Time = res[id].release_date;
+          let Director = res[id].director;
+          let Producer = res[id].producer;
+          let Length = res[id].running_time;
+
+          box += `
+                  <div class="display:flex">
                   <td class="text-center">電影名稱:${Movie}</td> <br>
-                  <td class="text-center">${Time}</td> <br>
-                  <td class="text-center">${Director}</td> <br>
-                  <td class="text-center">${Producer}</td> <br>
-                  <td class="text-center">${Length}分</td> <br>
+                  <td class="text-center">上映年份:${Time}年</td> <br>
+                  <td class="text-center">導演:${Director}</td> <br>
+                  <td class="text-center">製片:${Producer}</td> <br>
+                  <td class="text-center">電影時長:${Length}分</td> <br>
                   </div>
                   `;
 
-            modal.html(box);
+          modal.html(box);
         },
-        
+
       });
-  }
-   
-
-     $.ajax({
-        type: "get",
-        url: "https://ghibliapi.vercel.app/films",
-        data: "data",
-        dataType: "json",
-        success: function (res) {
-        let html="";
-        let XD = $('#box');
-
-          $.each(res, function (indexInArray, value) {
-
-
-            html += `<button type="button" onclick="get(${indexInArray})">123</button>`;
-          //   串接字串
-
-           
-          });
-          XD.html(html);
-        },
-        
-      });
-
-
-
-
-      $(".diagonal-line").hide();
-
-        $("#123").click(function () {
-          $(".diagonal-line").show();
-
-          gsap.fromTo(
-            ".diagonal-line",
-            {
-              x: 100,
-              duration: 2,
-              delay: 1,
-              opacity: 1,
-            },
-            {
-              x: 1100,
-              duration: 2,
-              delay: 1,
-              opacity: 0,
-            }
-          );
-        });
-
-
+      
+    }
 
     
-</script>
+
+    $.ajax({
+      type: "get",
+      url: "https://ghibliapi.vercel.app/films",
+      data: "data",
+      dataType: "json",
+      success: function (res) {
+        let html = "";
+        let XD = $('#box');
+
+        $.each(res, function (indexInArray, value) {
+
+
+          html += `
+          <div class="content">
+              <button type="button" class="button" onclick="get(${indexInArray})">點擊</button>
+          </div>
+          `;
+          //   串接字串
+
+
+        });
+        XD.html(html);
+      },
+
+    });
+
+
+
+
+    $(".diagonal-line").hide();
+
+    $("#123").click(function () {
+      $(".diagonal-line").show();
+
+      gsap.fromTo(
+        ".diagonal-line",
+        {
+          x: 100,
+          duration: 2,
+          delay: 1,
+          opacity: 1,
+        },
+        {
+          x: 1100,
+          duration: 2,
+          delay: 1,
+          opacity: 0,
+        }
+      );
+    });
+
+
+    function data(border, content) {
+
+      $(border).fadeIn()
+      if (content)
+        $(content).fadeIn()
+      // if (content && url)
+      //   $(content).load(url)
+    }
+
+    function cl(border) {
+      $(border).fadeOut();
+    }
+
+
+
+  </script>
 
 </body>
+
 </html>
