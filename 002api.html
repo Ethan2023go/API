@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Gibuli</title>
   <style>
-    .container {
-      height: 500vh;
+    .container{
+      width: 100%;
+      height: 1000vh;
+      display: flex;
+      justify-content: center;
     }
-
     .card_all {
       width: 85%;
       height: 22vh;
@@ -29,73 +31,58 @@
     }
 
     #cover {
-      width: 400px;
-      height: 400px;
+      width: 300px;
+      height: 155px;
       position: absolute;
-      z-index:5;
+      z-index: 5;
       border-radius: 15px;
       background: rgba(51, 51, 51, 0.4);
     }
 
-    #box{
-      height: 380vh;
+    /* #box {
+      height: 500vh;
       background-color: aquamarine;
-    }
+    } */
 
-    .button{
-      width: 100px;
-      height: 50px;
+    .button {
+      width: 80px;
+      height: 40px;
       margin-bottom: 100px;
+      margin: 0;
+      margin-top:10px;
     }
 
-    .content{
+    .content {
+      width: 1000px;
+      height: 450px;
       border: 1px solid black;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      overflow: hidden;
     }
 
-    .modal-content {
-        position: relative;
-        left: 500px;
-        top: 250px;
-        width: 50%;
-        height: 50%;
-        background-color: rgba(220, 220, 220, 0.1);
-        border-radius: 10px;
-        border: 1px solid #fff;
-        box-shadow: 0px 0px 60px #000;
-        backdrop-filter: blur(5px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 5;
-      }
-      .modal {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    img {
+      width: 600px;
+      height: 300px;
+      object-fit: cover;
+    }
   </style>
 </head>
 
 <body>
-  <!-- <button id="openModalBtn">打開 Modal</button>
-  <div id="myModal" class="modal" style="display: none">
-    <div class="modal-content" style="color: red">
-      <span class="close">X</span>
-    </div>
-  </div> -->
-
-
-  <div id="cover" style="display:none; ">
+<div class="container">
+  <div id="cover" style="display:none;">
     <div id="coverr">
-      <div style="position:absolute; left:10px; top:4px; cursor:pointer; z-index:101; color:aliceblue; font-size:25px; font-family:Arial Black;"
+      <div
+        style="position:absolute; right:10px; top:2px; cursor:pointer; z-index:101; color:aliceblue; font-size:25px; font-family:Arial Black;"
         onclick="cl('#cover')">X</div>
       <div id="cvr" style="position:absolute; width:99%; height:100%; margin:auto; z-index:100;"></div>
     </div>
   </div>
+
+
   <div id="box">
 
   </div>
@@ -104,12 +91,13 @@
     <div class="card_all col-sm-3 col-12">
       <button id="123">line</button>
       <div class="diagonal-line"></div>
-      <button class="nav-link bg-danger" onclick="data('#cover','#cvr')">點選開啟詳細資料</button>
+      <button class="nav-link bg-danger" onclick="data('#cover','#cvr')">modal</button>
     </div>
   </div>
 
+</div>
 
-
+  
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -122,7 +110,7 @@
 
   <script>
     function get(id) {
-    //  console.log(id);
+      //  console.log(id);
       $.ajax({
         type: "get",
         url: "https://ghibliapi.vercel.app/films",
@@ -131,9 +119,8 @@
         success: function (res) {
           console.log(res[id])
 
-          let modal = $('#cover');
+          let modal = $('#coverr');
           let box = '';
-
 
           let Movie = res[id].original_title;
           let Time = res[id].release_date;
@@ -142,7 +129,10 @@
           let Length = res[id].running_time;
 
           box += `
-                  <div class="display:flex">
+                  <div class="display:flex id="jump${id}">
+                    <div style="position:absolute; right:10px; top:4px; cursor:pointer; z-index:101; color:aliceblue; font-size:25px; font-family:Arial Black;"
+                    onclick="cl('#cover')">X
+                  </div>
                   <td class="text-center">電影名稱:${Movie}</td> <br>
                   <td class="text-center">上映年份:${Time}年</td> <br>
                   <td class="text-center">導演:${Director}</td> <br>
@@ -155,36 +145,64 @@
         },
 
       });
-      
+
     }
 
-    
 
     $.ajax({
       type: "get",
       url: "https://ghibliapi.vercel.app/films",
-      data: "data",
       dataType: "json",
       success: function (res) {
-        let html = "";
         let XD = $('#box');
+        let imgArray = new Array(3);
+        imgArray[0] = "./img/天空之城.jpg";
+        imgArray[1] = "./img/螢火蟲之墓.jpg";
+        imgArray[2] = "./img/龍貓.jpg";
+        imgArray[3] = "./img/魔女宅急便.jpg";
+        imgArray[4] = "./img/兒時的點點滴滴.jpg";
+        imgArray[5] = "./img/紅豬.jpg";
+        imgArray[6] = "./img/平成狸貓.jpg";
+        imgArray[7] = "./img/心之谷.jpg";
+        imgArray[8] = "./img/魔法公主.jpg";
+        imgArray[9] = "./img/山田君.jpg";
+        imgArray[10] = "./img/千尋.jpg";
+        imgArray[11] = "./img/貓的報恩.jpg";
+        imgArray[12] = "./img/霍兒的移動城堡2.jpg";
+        imgArray[13] = "./img/地海戰記.jpg";
+        imgArray[14] = "./img/波妞.jpg";
+        imgArray[15] = "./img/借物少女.jpg";
+        imgArray[16] = "./img/來自紅花坂.jpg";
+        imgArray[17] = "./img/風起.jpeg";
+        imgArray[18] = "./img/輝夜姬.jpg";
+        imgArray[19] = "./img/回憶中的瑪尼.jpg";
+        imgArray[20] = "./img/紅烏龜.png";
+        imgArray[21] = "./img/安雅與魔女.jpg";
 
         $.each(res, function (indexInArray, value) {
+          let button = `<button type="button" class="button" data-target="#${indexInArray}" onclick="get(${indexInArray}); scroll();">點擊</button>`;
 
+          // 創建img元素並設置src屬性為imgArray中對應的圖片URL
+          let img = `<img src="${imgArray[indexInArray]}" alt="${value.title}">`;
 
-          html += `
-          <div class="content">
-              <button type="button" class="button" onclick="get(${indexInArray})">點擊</button>
-          </div>
-          `;
-          //   串接字串
+          // 創建包含按鈕和圖像的content div元素
+          let content = $('<div class="content"></div>');
+          content.append(img);    // 將圖像添加到content中
+          content.append(button); // 將按鈕添加到content中
 
+          XD.append(content);     // 將content添加到目標元素中
         });
-        XD.html(html);
-      },
-
+      }
     });
 
+
+    function scroll() {
+      let target = $(this).data('target');
+      console.log('target');
+      $('html, body').animate({
+        scrollTop: $(target).offset().top
+      }, 'slow');
+    };
 
 
 
@@ -224,27 +242,6 @@
       $(border).fadeOut();
     }
 
-
-
-
-      // let openModalBtn = document.getElementById("openModalBtn");
-      // let modal = document.getElementById("myModal");
-      // let closeModal = document.getElementsByClassName("close")[0];
-
-      // openModalBtn.onclick = function () {
-      //   modal.style.display = "block";
-      // };
-
-      // closeModal.onclick = function () {
-      //   modal.style.display = "none";
-      // };
-
-      // // model 之外
-      // window.onclick = function (event) {
-      //   if (event.target == modal) {
-      //     modal.style.display = "none";
-      //   }
-      // };
 
   </script>
 
